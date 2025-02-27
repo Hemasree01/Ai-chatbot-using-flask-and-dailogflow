@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A responsive website with an integrated AI chatbot powered by Dialogflow."
+    />
+    <meta
+      http-equiv="Cache-Control"
+      content="no-cache, no-store, must-revalidate"
+    />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <title>AI Chatbot | Flask Website</title>
+
+    <link
+      rel="stylesheet"
+      href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css"
+    />
+    <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+
+    <style>
+      /* Basic styling for responsiveness */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f9f9f9;
+        text-align: center;
+      }
+
+      header {
+        background-color: #007bff;
+        color: white;
+        padding: 20px;
+        font-size: 24px;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      p {
+        font-size: 18px;
+        color: #333;
+      }
+
+      df-messenger {
+        z-index: 999;
+        position: fixed;
+        bottom: 16px;
+        right: 16px;
+        --df-messenger-font-color: #000;
+        --df-messenger-font-family: "Google Sans", sans-serif;
+        --df-messenger-chat-background: #f3f6fc;
+        --df-messenger-message-user-background: #d3e3fd;
+        --df-messenger-message-bot-background: #fff;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 600px) {
+        .container {
+          width: 90%;
+          padding: 15px;
+        }
+
+        header {
+          font-size: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>AI Chatbot Website</header>
+
+    <div class="container">
+      <h2>Welcome to Your AI Chatbot</h2>
+      <p>
+        This chatbot is powered by Google Dialogflow and integrated into a Flask
+        web app. Ask me about:
+      </p>
+      <ul>
+        <li>
+          <strong><a href="#">birt-pre-training.pdf</a></strong>
+        </li>
+        <li>
+          <strong
+            ><a href="#"
+              >He_Deep_Residual_Learning_CVPR_2016_paper.pdf</a
+            ></strong
+          >
+        </li>
+        <li>
+          <strong
+            ><a href="#"
+              >NIPS-2017-attention-is-all-you-need-Paper.pdf</a
+            ></strong
+          >
+        </li>
+      </ul>
+    </div>
+
+    <df-messenger
+      id="df-messenger"
+      location="us-central1"
+      project-id="resolute-winter-447814-t5"
+      agent-id="ab8f4047-d088-435d-a2cd-0752ab81b919"
+      language-code="en"
+      max-query-length="-1"
+      allow-feedback="all"
+    >
+      <df-messenger-chat-bubble chat-title="Chatbot"></df-messenger-chat-bubble>
+    </df-messenger>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const dfMessenger = document.querySelector("df-messenger");
+
+        // Clear the chat session when the page is refreshed
+        sessionStorage.clear();
+
+        // Force reload of the chat widget to reset the session
+        const chatWidget = document.getElementById("df-messenger");
+        if (chatWidget) {
+          chatWidget.remove();
+          setTimeout(() => {
+            const newChatWidget = document.createElement("df-messenger");
+            newChatWidget.setAttribute("id", "df-messenger");
+            newChatWidget.setAttribute("location", "us-central1");
+            newChatWidget.setAttribute(
+              "project-id",
+              "resolute-winter-447814-t5"
+            );
+            newChatWidget.setAttribute(
+              "agent-id",
+              "ab8f4047-d088-435d-a2cd-0752ab81b919"
+            );
+            newChatWidget.setAttribute("language-code", "en");
+            newChatWidget.setAttribute("max-query-length", "-1");
+            newChatWidget.setAttribute("allow-feedback", "all");
+
+            document.body.appendChild(newChatWidget);
+          }, 100);
+        }
+
+        // Welcome message
+        dfMessenger.renderCustomText(
+          "Hello! How can I assist you today?",
+          true
+        );
+      });
+    </script>
+  </body>
+</html>
